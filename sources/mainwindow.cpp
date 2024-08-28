@@ -2,11 +2,14 @@
 #include "ui_mainwindow.h"
 #include "startscreen.h"
 
-MainWindow::MainWindow(
+MainWindow::MainWindow(int userId,
+                       QString userName,
                        std::shared_ptr<Database> dbPtr,
                        QWidget *parent)
     : QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    m_userId(userId),
+    m_userName(userName)
 {
     ui->setupUi(this);
     assert(dbPtr);
@@ -26,7 +29,7 @@ MainWindow *MainWindow::createClient(std::shared_ptr<Database> dbPtr)
     {
         return nullptr;
     }
-    auto w = new MainWindow(s.getDatabase());
+    auto w = new MainWindow(s.userId(), s.userName(), s.getDatabase());
     w->setAttribute(Qt::WA_DeleteOnClose);
     return w;
 }

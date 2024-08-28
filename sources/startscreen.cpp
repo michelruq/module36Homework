@@ -38,8 +38,10 @@ void StartScreen::setRegistrationForm()
    ui->stackedWidget->setCurrentIndex(1);
 }
 
-void StartScreen::onLoggedIn()
+void StartScreen::onLoggedIn(int userId, QString userName)
 {
+    m_userId = userId;
+    m_userName = userName;
     accept();
 }
 
@@ -48,7 +50,17 @@ void StartScreen::onRejectRequested()
     reject();
 }
 
+QString StartScreen::userName() const
+{
+    return m_userName;
+}
+
 std::shared_ptr<Database> StartScreen::getDatabase() const
 {
     return m_dbPtr;
+}
+
+int StartScreen::userId() const
+{
+    return m_userId;
 }

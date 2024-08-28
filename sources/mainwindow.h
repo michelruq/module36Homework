@@ -14,7 +14,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindow(
+    explicit MainWindow(int userId,
+                        QString userName,
                         std::shared_ptr<Database> dbPtr = nullptr,
                         QWidget *parent = nullptr);
     ~MainWindow();
@@ -31,6 +32,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     std::shared_ptr<Database> m_dbPtr;
+    int m_userId;
+    QString m_userName;
 };
 
 #endif // MAINWINDOW_H

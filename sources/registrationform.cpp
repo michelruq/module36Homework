@@ -1,3 +1,5 @@
+#include <QMessageBox>
+
 #include "registrationform.h"
 #include "ui_registrationform.h"
 
@@ -26,7 +28,25 @@ void RegistrationForm::on_loginButton_clicked()
 
 void RegistrationForm::on_buttonBox_accepted()
 {
-    emit accepted();
+    if(ui->PasswordEdit->text() != ui->ConfirmationPasswordEdit->text())
+    {
+        QMessageBox::critical(this, tr("Error"), tr("Passwords doesn't match"));
+        return;
+    }
+    auto userId = m_dbPtr->addUser(ui->LoginEdit->text().toStdString(),
+                                   ui->PasswordEdit->text().toStdString());
+    switch(userId)
+    {
+        case -1:
+           QMessageBox::critical(this, tr("Error"), tr("Login isn't correct"));
+        break;
+        case -2:
+            QMessageBox::critical(this, tr("Error"), tr("Login is already exist"));
+        break;
+        default:
+            emit accepted(userId, ui->LoginEdit->text());
+        break;
+    }
 }
 
 

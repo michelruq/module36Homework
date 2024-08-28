@@ -21,7 +21,7 @@ public:
 
 signals:
     void loginRequested();
-    void accepted();
+    void accepted(int userId, QString userName);
     void rejected();
 
 private slots:
