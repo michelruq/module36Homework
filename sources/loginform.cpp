@@ -13,6 +13,12 @@ LoginForm::~LoginForm()
     delete ui;
 }
 
+void LoginForm::setDatabase(std::shared_ptr<Database> dbPtr)
+{
+    m_dbPtr = dbPtr;
+}
+
+
 void LoginForm::on_buttonBox_accepted()
 {
     emit accepted();

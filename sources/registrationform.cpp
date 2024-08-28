@@ -13,11 +13,16 @@ RegistrationForm::~RegistrationForm()
     delete ui;
 }
 
+void RegistrationForm::setDatabase(std::shared_ptr<Database> dbPtr)
+{
+    m_dbPtr = dbPtr;
+}
 
 void RegistrationForm::on_loginButton_clicked()
 {
    emit loginRequested();
 }
+
 
 void RegistrationForm::on_buttonBox_accepted()
 {
