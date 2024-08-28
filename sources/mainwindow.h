@@ -28,6 +28,7 @@ private slots:
     void on_privateMessageSendButton_clicked();
     void on_actionOpen_another_client_triggered();
     void on_actionClose_this_client_triggered();
+    void updateChats();
 
 private:
     Ui::MainWindow *ui;
