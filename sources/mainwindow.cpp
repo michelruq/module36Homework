@@ -54,7 +54,7 @@ ServerMainWindow *MainWindow::createServerClient(std::shared_ptr<Database> dbPtr
     {
         return nullptr;
     }
-    auto sw = new ServerMainWindow(s.getDatabase());
+    auto sw = new ServerMainWindow(s.userId(), s.userName(), s.getDatabase());
     return sw;
 }
 

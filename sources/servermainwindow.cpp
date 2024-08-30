@@ -1,9 +1,14 @@
 #include "servermainwindow.h"
 #include "ui_servermainwindow.h"
 
-ServerMainWindow::ServerMainWindow(std::shared_ptr<Database> dbPtr, QWidget *parent)
+ServerMainWindow::ServerMainWindow(int userId,
+                                   QString userName,
+                                   std::shared_ptr<Database> dbPtr,
+                                   QWidget *parent)
     : QDialog(parent)
-    , ui(new Ui::ServerMainWindow)
+    , ui(new Ui::ServerMainWindow),
+    m_userId(userId),
+    m_userName(userName)
 {
     ui->setupUi(this);
     assert(dbPtr);

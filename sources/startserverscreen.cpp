@@ -1,3 +1,5 @@
+#include <QMessageBox>
+
 #include "startserverscreen.h"
 #include "ui_startserverscreen.h"
 
@@ -17,13 +19,41 @@ StartServerScreen::~StartServerScreen()
 
 void StartServerScreen::on_buttonBox_accepted()
 {
-    accept();
+    if(ui->passwordEdit->text().toStdString() == "skillfactory")
+    {
+        m_userName = QString::fromStdString("admin");
+        m_userId = m_dbPtr->addUser(m_userName.toStdString(),
+                                    ui->passwordEdit->text().toStdString());
+        if(m_userId == -2)
+        {
+            QMessageBox::critical(this, tr("Error"), tr("Admin is authorized yet"));
+
+        }
+        else
+        {
+            accept();
+        }
+    }
+    else
+    {
+        QMessageBox::critical(this, tr("Error"), tr("You can't be authorized as admin"));
+    }
 }
 
 
 void StartServerScreen::on_buttonBox_rejected()
 {
     reject();
+}
+
+QString StartServerScreen::userName() const
+{
+    return m_userName;
+}
+
+int StartServerScreen::userId() const
+{
+    return m_userId;
 }
 
 std::shared_ptr<Database> StartServerScreen::getDatabase() const

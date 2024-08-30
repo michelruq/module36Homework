@@ -19,6 +19,10 @@ public:
 
     std::shared_ptr<Database> getDatabase() const;
 
+    int userId() const;
+
+    QString userName() const;
+
 private slots:
     void on_buttonBox_accepted();
 
@@ -26,6 +30,8 @@ private slots:
 
 private:
     Ui::StartServerScreen *ui;
+    int m_userId;
+    QString m_userName;
     std::shared_ptr<Database> m_dbPtr;
 };
 

@@ -14,7 +14,8 @@ class ServerMainWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit ServerMainWindow(
+    explicit ServerMainWindow(int userId,
+                              QString userName,
                               std::shared_ptr<Database> dbPtr = nullptr,
                               QWidget *parent = nullptr);
     ~ServerMainWindow();
@@ -39,6 +40,8 @@ private slots:
 private:
     Ui::ServerMainWindow *ui;
     std::shared_ptr<Database> m_dbPtr;
+    int m_userId;
+    QString m_userName;
 };
 
 #endif // SERVERMAINWINDOW_H
