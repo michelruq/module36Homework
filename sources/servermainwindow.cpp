@@ -1,3 +1,5 @@
+#include <QMessageBox>
+
 #include "servermainwindow.h"
 #include "ui_servermainwindow.h"
 #include "utility.h"
@@ -89,13 +91,29 @@ void ServerMainWindow::on_showUserListButton_clicked()
 
 void ServerMainWindow::on_blockUserButton_clicked()
 {
+    std::string blockedName;
 
+    if(Utility::GetNameFromList(this, blockedName, m_dbPtr->getUserListAvailiableForBlocking()))
+    {
+        string tempString = "The user <" + blockedName + ">" + " will be blocked";
+        const char* temp = tempString.c_str();
+        QMessageBox::critical(this, "Error", tr(temp));
+        m_dbPtr->blockUser(blockedName);
+    }
 }
 
 
 void ServerMainWindow::on_unblockUserButton_clicked()
 {
+    std::string unblockedName;
 
+    if(Utility::GetNameFromList(this, unblockedName, m_dbPtr->getBlockedUserList()))
+    {
+        string tempString = "The user <" + unblockedName + ">" + " will be unblocked";
+        const char* temp = tempString.c_str();
+        QMessageBox::critical(this, "Error", tr(temp));
+        m_dbPtr->unblockUser(unblockedName);
+    }
 }
 
 

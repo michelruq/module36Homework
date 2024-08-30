@@ -14,12 +14,33 @@ int Database::searchUserByName(string username)
 
 vector<string> Database::getUserList() const
 {
-  vector<string> userList;
-  for(auto user : _usersMapByName)
-  {
-    userList.push_back(user.first);
-  }
-  return userList;
+    vector<string> userList;
+    for(auto& user : _usersMapByName)
+    {
+        userList.push_back(user.first);
+    }
+    return userList;
+}
+
+vector<string> Database::getUserListAvailiableForBlocking() const
+{
+    vector<string> userList;
+    for(auto& user : _usersMapByName)
+    {
+        if(user.first != "admin")
+            userList.push_back(user.first);
+    }
+    return userList;
+}
+
+vector<string> Database::getBlockedUserList() const
+{
+    vector<string> userList;
+    for(auto& user : _blockedUsersMapByName)
+    {
+        userList.push_back(user.first);
+    }
+    return userList;
 }
 
 string Database::getUserName(int userId) const
@@ -46,6 +67,24 @@ int Database::addUser(string username, string password)
 	return newUser.getUserID();
 }
 
+int Database::blockUser(string username)
+{
+    if (!correctName(username)) return -1;
+    auto uit = _usersMapByName.find(username);
+    if (uit == _usersMapByName.end()) return -2;
+    _blockedUsersMapByName.insert(*uit);
+    return uit->second;
+}
+
+int Database::unblockUser(string username)
+{
+    if (!correctName(username)) return -1;
+    auto uit = _blockedUsersMapByName.find(username);
+    if (uit == _blockedUsersMapByName.end()) return -2;
+    _blockedUsersMapByName.erase(uit);
+    return uit->second;
+}
+
 int Database::checkPassword(string username, string password)
 {
 	int result = -1;
@@ -60,7 +99,11 @@ int Database::checkPassword(string username, string password)
 
 void Database::addChatMessage(string sender, string text)
 {
-	_messages.push_back(Message(sender, text));
+    auto uit = _blockedUsersMapByName.find(sender);
+    if (uit == _blockedUsersMapByName.end())
+    {
+        _messages.push_back(Message(sender, text));
+    }
 }
 
 bool Database::addPrivateMessage(string sender, string target, string message)
@@ -70,7 +113,11 @@ bool Database::addPrivateMessage(string sender, string target, string message)
 	{
 		return false;
 	}
-  _messages.push_back(Message(sender, targetUser, message));
+    auto uit = _blockedUsersMapByName.find(sender);
+    if (uit == _blockedUsersMapByName.end())
+    {
+        _messages.push_back(Message(sender, targetUser, message));
+    }
 	return true;
 }
 
