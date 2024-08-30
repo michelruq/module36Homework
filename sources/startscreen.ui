@@ -23,7 +23,7 @@
       <number>-1</number>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="LoginForm" name="loginWidget">
       <property name="toolTipDuration">
@@ -43,13 +43,13 @@
   <customwidget>
    <class>LoginForm</class>
    <extends>QWidget</extends>
-   <header>loginform.h</header>
+   <header>sources/loginform.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>RegistrationForm</class>
    <extends>QWidget</extends>
-   <header>registrationform.h</header>
+   <header>sources/registrationform.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

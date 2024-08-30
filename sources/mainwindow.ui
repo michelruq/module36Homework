@@ -70,6 +70,7 @@
     <addaction name="actionClose_this_client"/>
     <addaction name="actionOpen_another_client"/>
     <addaction name="separator"/>
+    <addaction name="actionOpen_server_client"/>
    </widget>
    <addaction name="menuMain_Menu"/>
   </widget>
@@ -82,6 +83,11 @@
   <action name="actionOpen_another_client">
    <property name="text">
     <string>Open another client</string>
+   </property>
+  </action>
+  <action name="actionOpen_server_client">
+   <property name="text">
+    <string>Open server client</string>
    </property>
   </action>
  </widget>

@@ -7,6 +7,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "startscreen.h"
+#include "startserverscreen.h"
 
 MainWindow::MainWindow(int userId,
                        QString userName,
@@ -42,6 +43,18 @@ MainWindow *MainWindow::createClient(std::shared_ptr<Database> dbPtr)
     auto w = new MainWindow(s.userId(), s.userName(), s.getDatabase());
     w->setAttribute(Qt::WA_DeleteOnClose);
     return w;
+}
+
+ServerMainWindow *MainWindow::createServerClient()
+{
+    StartServerScreen s;
+    auto result = s.exec();
+    if(result == QDialog::Rejected)
+    {
+        return nullptr;
+    }
+    auto sw = new ServerMainWindow();
+    return sw;
 }
 
 
@@ -150,5 +163,13 @@ void MainWindow::updateChats()
         ui->privateChatBrowser->setText(chat);
     }
 
+}
+
+
+void MainWindow::on_actionOpen_server_client_triggered()
+{
+    auto w = createServerClient();
+    if(w)
+        w->show();
 }
 

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <memory>
 #include "DataBase.h"
+#include "servermainwindow.h"
 
 namespace Ui {
 class MainWindow;
@@ -21,6 +22,7 @@ public:
     ~MainWindow();
 
     static MainWindow* createClient(std::shared_ptr<Database> dbPtr = nullptr);
+    static ServerMainWindow* createServerClient();
 
 private slots:
     void on_messageLineEdit_returnPressed();
@@ -29,6 +31,8 @@ private slots:
     void on_actionOpen_another_client_triggered();
     void on_actionClose_this_client_triggered();
     void updateChats();
+
+    void on_actionOpen_server_client_triggered();
 
 private:
     Ui::MainWindow *ui;
