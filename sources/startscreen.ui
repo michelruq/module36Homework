@@ -23,7 +23,7 @@
       <number>-1</number>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="LoginForm" name="loginWidget">
       <property name="toolTipDuration">

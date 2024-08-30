@@ -1,5 +1,6 @@
 #include "servermainwindow.h"
 #include "ui_servermainwindow.h"
+#include "utility.h"
 
 ServerMainWindow::ServerMainWindow(int userId,
                                    QString userName,
@@ -28,13 +29,21 @@ void ServerMainWindow::on_messageLineEdit_returnPressed()
 
 void ServerMainWindow::on_sendMessageButton_clicked()
 {
-
+    m_dbPtr->addChatMessage(m_userName.toStdString(),
+                            ui->messageLineEdit->text().toStdString());
 }
 
 
 void ServerMainWindow::on_privateMessageSendButton_clicked()
 {
+    std::string destinationName;
 
+    if(Utility::GetNameFromList(this, destinationName, m_dbPtr->getUserList()))
+    {
+        m_dbPtr->addPrivateMessage(m_userName.toStdString(),
+                                   destinationName,
+                                   ui->messageLineEdit->text().toStdString());
+    }
 }
 
 
