@@ -49,13 +49,41 @@ void ServerMainWindow::on_privateMessageSendButton_clicked()
 
 void ServerMainWindow::on_showMessageListButton_clicked()
 {
+    auto chatMessages = m_dbPtr->getChatMessages();
+    QString chat;
+    for(const auto &msg : chatMessages)
+    {
+        chat.append(QString::fromStdString(msg) + "\n");
+    }
+
+    auto privateMessages = m_dbPtr->getPrivateMessage();
+    for(const auto &msg : privateMessages)
+    {
+        chat.append("<" + QString::fromStdString(msg.getSender()) + "> " + tr("say to ")
+                    + QString::fromStdString(m_dbPtr->getUserName(msg.getDest())) + ": "
+                    + QString::fromStdString(msg.getText()) + "\n");
+    }
+
+    if(ui->commonChatBrowser->toPlainText() != chat)
+    {
+        ui->commonChatBrowser->setText(chat);
+    }
 
 }
 
 
 void ServerMainWindow::on_showUserListButton_clicked()
 {
-
+    auto userList = m_dbPtr->getUserList();
+    QString userString;
+    for(auto& user : userList)
+    {
+        userString.append(QString::fromStdString(user) + "\n");
+    }
+    if(ui->userListBrowser->toPlainText() != userString)
+    {
+        ui->userListBrowser->setText(userString);
+    }
 }
 
 
