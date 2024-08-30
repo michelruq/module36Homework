@@ -19,6 +19,7 @@ public:
   string getUserName(int userId) const;
 	Database();
 	int addUser(string username, string password);
+    int deleteUser(string username);
     int blockUser(string username);
     int unblockUser(string username);
 	int checkPassword(string username, string password);

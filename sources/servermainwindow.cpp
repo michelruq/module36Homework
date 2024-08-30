@@ -119,6 +119,14 @@ void ServerMainWindow::on_unblockUserButton_clicked()
 
 void ServerMainWindow::on_deleteUserButton_clicked()
 {
+    std::string deletedName;
 
+    if(Utility::GetNameFromList(this, deletedName, m_dbPtr->getBlockedUserList()))
+    {
+        string tempString = "The user <" + deletedName + ">" + " will be deleted";
+        const char* temp = tempString.c_str();
+        QMessageBox::critical(this, "Error", tr(temp));
+        m_dbPtr->deleteUser(deletedName);
+    }
 }
 

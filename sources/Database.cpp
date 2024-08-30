@@ -67,6 +67,24 @@ int Database::addUser(string username, string password)
 	return newUser.getUserID();
 }
 
+int Database::deleteUser(string username)
+{
+    if (!correctName(username)) return -1;
+    auto uit = _usersMapByName.find(username);
+    if (uit != _usersMapByName.end())
+    {
+        _usersMapByName.erase(uit);
+    }
+    for (vector<User>::iterator it = _users.begin(); it != _users.end();)
+    {
+        if (it->getuserName() == username)
+            it = _users.erase(it);
+        else
+            ++it;
+    }
+    return uit->second;
+}
+
 int Database::blockUser(string username)
 {
     if (!correctName(username)) return -1;
@@ -99,10 +117,14 @@ int Database::checkPassword(string username, string password)
 
 void Database::addChatMessage(string sender, string text)
 {
-    auto uit = _blockedUsersMapByName.find(sender);
-    if (uit == _blockedUsersMapByName.end())
+    auto uit = _usersMapByName.find(sender);
+    if (uit != _usersMapByName.end())
     {
-        _messages.push_back(Message(sender, text));
+        auto uit = _blockedUsersMapByName.find(sender);
+        if (uit == _blockedUsersMapByName.end())
+        {
+            _messages.push_back(Message(sender, text));
+        }
     }
 }
 
@@ -113,10 +135,14 @@ bool Database::addPrivateMessage(string sender, string target, string message)
 	{
 		return false;
 	}
-    auto uit = _blockedUsersMapByName.find(sender);
-    if (uit == _blockedUsersMapByName.end())
+    auto uit = _usersMapByName.find(sender);
+    if (uit != _usersMapByName.end())
     {
-        _messages.push_back(Message(sender, targetUser, message));
+        auto uit = _blockedUsersMapByName.find(sender);
+        if (uit == _blockedUsersMapByName.end())
+        {
+            _messages.push_back(Message(sender, targetUser, message));
+        }
     }
 	return true;
 }
