@@ -1,11 +1,13 @@
 #include "servermainwindow.h"
 #include "ui_servermainwindow.h"
 
-ServerMainWindow::ServerMainWindow(QWidget *parent)
+ServerMainWindow::ServerMainWindow(std::shared_ptr<Database> dbPtr, QWidget *parent)
     : QDialog(parent)
     , ui(new Ui::ServerMainWindow)
 {
     ui->setupUi(this);
+    assert(dbPtr);
+    m_dbPtr = dbPtr;
 }
 
 ServerMainWindow::~ServerMainWindow()

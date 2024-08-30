@@ -2,6 +2,8 @@
 #define SERVERMAINWINDOW_H
 
 #include <QDialog>
+#include <memory>
+#include "Database.h"
 
 namespace Ui {
 class ServerMainWindow;
@@ -12,7 +14,9 @@ class ServerMainWindow : public QDialog
     Q_OBJECT
 
 public:
-    explicit ServerMainWindow(QWidget *parent = nullptr);
+    explicit ServerMainWindow(
+                              std::shared_ptr<Database> dbPtr = nullptr,
+                              QWidget *parent = nullptr);
     ~ServerMainWindow();
 
 private slots:
@@ -34,6 +38,7 @@ private slots:
 
 private:
     Ui::ServerMainWindow *ui;
+    std::shared_ptr<Database> m_dbPtr;
 };
 
 #endif // SERVERMAINWINDOW_H

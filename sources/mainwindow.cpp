@@ -45,15 +45,16 @@ MainWindow *MainWindow::createClient(std::shared_ptr<Database> dbPtr)
     return w;
 }
 
-ServerMainWindow *MainWindow::createServerClient()
+ServerMainWindow *MainWindow::createServerClient(std::shared_ptr<Database> dbPtr)
 {
-    StartServerScreen s;
+    assert(dbPtr);
+    StartServerScreen s(dbPtr);
     auto result = s.exec();
     if(result == QDialog::Rejected)
     {
         return nullptr;
     }
-    auto sw = new ServerMainWindow();
+    auto sw = new ServerMainWindow(s.getDatabase());
     return sw;
 }
 
@@ -86,7 +87,7 @@ void MainWindow::on_privateMessageSendButton_clicked()
     connect(buttonBox, &QDialogButtonBox::rejected, &dial, &QDialog::reject);
 
     auto userList = m_dbPtr->getUserList();
-    for(auto user : userList)
+    for(auto& user : userList)
     {
         userListWgt->addItem(QString::fromStdString(user));
     }
@@ -168,7 +169,7 @@ void MainWindow::updateChats()
 
 void MainWindow::on_actionOpen_server_client_triggered()
 {
-    auto w = createServerClient();
+    auto w = createServerClient(m_dbPtr);
     if(w)
         w->show();
 }

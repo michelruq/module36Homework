@@ -22,7 +22,7 @@ public:
     ~MainWindow();
 
     static MainWindow* createClient(std::shared_ptr<Database> dbPtr = nullptr);
-    static ServerMainWindow* createServerClient();
+    static ServerMainWindow* createServerClient(std::shared_ptr<Database> dbPtr = nullptr);
 
 private slots:
     void on_messageLineEdit_returnPressed();
